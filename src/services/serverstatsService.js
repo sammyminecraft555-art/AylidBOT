@@ -14,12 +14,12 @@ export const COUNTER_TYPE_CONFIG = {
   },
   members_only: {
     label: 'Members Only',
-    baseName: '〔🫂〕ᴍᴇᴍʙᴇʀꜱ:',
+    baseName: '〔🫂〕ᴍᴇᴍʙᴇʀꜱ',
     emoji: '👤'
   },
   bots: {
     label: 'Bots Only',
-    baseName: '〔🤖〕ʙᴏᴛꜱ:',
+    baseName: '〔🤖〕ʙᴏᴛꜱ',
     emoji: '🤖'
   }
 };
