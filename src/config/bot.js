@@ -411,7 +411,7 @@ export const botConfig = {
     types: {
       // Built-in counter types and how each count is calculated.
       members: {
-        name: "👥 Mem",
+        name: "👥 Members",
         description: "Total members in the server",
         getCount: (guild) => guild.memberCount.toString(),
       },
@@ -422,7 +422,7 @@ export const botConfig = {
           guild.members.cache.filter((m) => m.user.bot).size.toString(),
       },
       members_only: {
-        name: "👤 bers",
+        name: "👤 Humans",
         description: "Total human members (non-bots)",
         getCount: (guild) =>
           guild.members.cache.filter((m) => !m.user.bot).size.toString(),
