@@ -394,7 +394,7 @@ export const botConfig = {
       // Channel type used for counters (typically "voice").
       type: "voice",
       // Channel name format. `{count}` is replaced automatically.
-      channelName: "{name}-{count}",
+      channelName: "〔🫂〕{name}: {count}",
     },
     permissions: {
       // Default denied permissions for the counter channel.
@@ -411,7 +411,7 @@ export const botConfig = {
     types: {
       // Built-in counter types and how each count is calculated.
       members: {
-        name: "👥 Members",
+        name: "👥 Mem",
         description: "Total members in the server",
         getCount: (guild) => guild.memberCount.toString(),
       },
@@ -422,7 +422,7 @@ export const botConfig = {
           guild.members.cache.filter((m) => m.user.bot).size.toString(),
       },
       members_only: {
-        name: "👤 Humans",
+        name: "👤 bers",
         description: "Total human members (non-bots)",
         getCount: (guild) =>
           guild.members.cache.filter((m) => !m.user.bot).size.toString(),
