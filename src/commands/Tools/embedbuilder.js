@@ -782,6 +782,14 @@ async function handleEditField(selectInteraction, rootInteraction, state) {
 }
 
 async function handleRemoveField(selectInteraction, rootInteraction, state) {
+        if (state.fields.length === 0) {
+        await selectInteraction.reply({
+            content: 'There are no fields to remove.',
+            flags: MessageFlags.Ephemeral,
+        });
+        return;
+    }
+
     await selectInteraction.deferUpdate();
 
     const pickSelect = new StringSelectMenuBuilder()
