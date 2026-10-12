@@ -782,14 +782,6 @@ async function handleEditField(selectInteraction, rootInteraction, state) {
 }
 
 async function handleRemoveField(selectInteraction, rootInteraction, state) {
-        if (state.fields.length === 0) {
-        await selectInteraction.reply({
-            content: 'There are no fields to remove.',
-            flags: MessageFlags.Ephemeral,
-        });
-        return;
-    }
-
     await selectInteraction.deferUpdate();
 
     const pickSelect = new StringSelectMenuBuilder()
@@ -1134,49 +1126,18 @@ export default {
                         default:
                             await ci.deferUpdate();
                     }
-                
-} catch (error) {
-    if (error?.code === 10062 || error?.code === 40060) {
-        logger.warn(
-            'Embed builder interaction expired or was already acknowledged:',
-            error.code
-        );
-        return;
-    }
-
-    logger.error('Error in embedbuilder collector:', error);
-
-    const msg =
-        error instanceof TitanBotError
-            ? error.userMessage || 'An error occurred.'
-            : 'An unexpected error occurred.';
-
-    try {
-        if (ci.replied) {
-            await ci.followUp({
-                content: msg,
-                flags: MessageFlags.Ephemeral,
-            });
-        } else if (ci.deferred) {
-            await ci.editReply({
-                content: msg,
-                embeds: [],
-                components: [],
-            });
-        } else {
-            await ci.reply({
-                content: msg,
-                flags: MessageFlags.Ephemeral,
-            });
-        }
-    } catch (responseError) {
-        logger.warn(
-            'Could not send embed builder error response:',
-            responseError.code || responseError.message
-        );
-    }
-}
-
+                } catch (error) {
+                    logger.error('Error in embedbuilder collector:', error);
+                    const msg =
+                        error instanceof TitanBotError
+                            ? error.userMessage || 'An error occurred.'
+                            : 'An unexpected error occurred.';
+                    if (!ci.replied && !ci.deferred) await ci.deferUpdate().catch(() => {});
+                    await replyUserError(ci, {
+                        type: ErrorTypes.UNKNOWN,
+                        message: msg,
+                    }).catch(() => {});
+                }
             });
 
             collector.on('end', async (_, reason) => {
